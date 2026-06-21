@@ -1,9 +1,9 @@
-import { Readability } from "@mozilla/readability";
-import { JSDOM } from "jsdom";
+import * as cheerio from "cheerio";
 
 const MAX_TEXT_LENGTH = 100000;
 const INSTAGRAM_TERMS_URL = "https://help.instagram.com/termsofuse";
 const INSTAGRAM_CMS_ID = "581066165581870";
+const REDDIT_TERMS_URL = "https://redditinc.com/policies/user-agreement";
 
 function stripTags(value: string) {
   return value
@@ -39,20 +39,84 @@ function cleanWhitespace(value: string) {
 
 function normalizeReadableText(value: string) {
   return cleanWhitespace(
-    value
-      .replace(/•/g, "\n• ")
-      .replace(/([a-z])([A-Z][a-z])/g, "$1 $2")
-      .replace(/([.:])([A-Z])/g, "$1 $2"),
+    decodeEntities(
+      value
+        .replace(/•/g, "\n• ")
+        .replace(/([a-z])([A-Z][a-z])/g, "$1 $2")
+        .replace(/([.:])([A-Z])/g, "$1 $2"),
+    ),
   );
 }
 
-function fallbackHtmlToText(html: string) {
-  const mainMatch =
-    html.match(/<main[\s\S]*?<\/main>/i) ??
-    html.match(/<article[\s\S]*?<\/article>/i) ??
-    html.match(/<body[\s\S]*?<\/body>/i);
+function extractWithCheerio(html: string) {
+  const $ = cheerio.load(html);
 
-  return cleanWhitespace(decodeEntities(stripTags(mainMatch?.[0] ?? html)));
+  $("script, style, nav, header, footer, noscript, svg, form, button").remove();
+  $(
+    [
+      "[aria-label*='breadcrumb' i]",
+      "[class*='breadcrumb' i]",
+      "[class*='cookie' i]",
+      "[class*='footer' i]",
+      "[class*='header' i]",
+      "[class*='modal' i]",
+      "[class*='popup' i]",
+      "[class*='newsletter' i]",
+      "[class*='subscribe' i]",
+      "[class*='social' i]",
+      "[class*='nav' i]",
+      "[id*='cookie' i]",
+      "[id*='footer' i]",
+      "[id*='header' i]",
+      "[id*='nav' i]",
+    ].join(","),
+  ).remove();
+
+  const root =
+    $("main").first() ||
+    $("article").first() ||
+    $("[role='main']").first() ||
+    $("body").first();
+
+  const blocks = root.find("h1, h2, h3, h4, p, li").toArray();
+  const lines: string[] = [];
+
+  for (const block of blocks) {
+    const tag = block.tagName.toLowerCase();
+    const text = normalizeReadableText($(block).text());
+
+    if (!text || text.length < 2) {
+      continue;
+    }
+
+    if (tag === "li") {
+      lines.push(`• ${text}`);
+      continue;
+    }
+
+    if (/^(h1|h2|h3|h4)$/.test(tag)) {
+      lines.push(`\n${text}`);
+      continue;
+    }
+
+    lines.push(text);
+  }
+
+  const extracted = cleanWhitespace(lines.join("\n\n"));
+  return extracted.length > 120 ? extracted : cleanWhitespace(decodeEntities(stripTags(root.html() ?? html)));
+}
+
+function trimRedditTerms(text: string) {
+  const start = text.indexOf("Hello, redditors and people of the Internet!");
+  const endMarkers = [
+    text.indexOf("Reddit, Inc.303 2nd Street", start),
+    text.indexOf("Reddit, Inc. 303 2nd Street", start),
+  ].filter((value) => value > start);
+  const end = endMarkers.length > 0 ? Math.max(...endMarkers) + 80 : text.length;
+
+  return cleanWhitespace(
+    (start >= 0 ? text.slice(start, end) : text).trim(),
+  );
 }
 
 async function fetchHtml(url: string) {
@@ -109,14 +173,11 @@ export async function fetchTerms(url: string) {
     return extractInstagramTerms();
   }
 
-  const { html, finalUrl } = await fetchHtml(url);
-  const dom = new JSDOM(html, { url: finalUrl });
-  const article = new Readability(dom.window.document).parse();
-
+  const { html } = await fetchHtml(url);
   const extracted =
-    article?.textContent && article.textContent.trim().length > 400
-      ? normalizeReadableText(article.textContent)
-      : fallbackHtmlToText(html);
+    url.includes("redditinc.com/policies/user-agreement")
+      ? trimRedditTerms(extractWithCheerio(html))
+      : extractWithCheerio(html);
 
   if (!extracted || extracted.length < 120) {
     throw new Error("The page loaded, but readable terms text could not be extracted.");
