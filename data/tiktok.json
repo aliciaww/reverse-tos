@@ -1,0 +1,35 @@
+{
+  "brand": "TikTok",
+  "logo": "/logos/tiktok.svg",
+  "sourceUrl": "https://www.tiktok.com/legal/page/us/terms-of-service/en",
+  "date": "2026-06-20",
+  "text": "TikTok's terms frame the service as a highly moderated entertainment platform with aggressive discretion over content, accounts, recommendations, and features. Users allow TikTok to collect device data, usage patterns, identifiers, and signals related to how content is viewed, shared, or skipped. Uploaded videos, audio, and related materials are typically covered by a broad license that supports distribution, promotion, derivative formatting, and platform operations. The service can suspend accounts, limit visibility, or remove content based on policy enforcement or safety judgments. Terms updates may apply through continued use, and disputes are often routed through arbitration and class-action limits. Liability disclaimers and damages limitations further narrow the user's leverage.",
+  "cachedSummary": {
+    "verdict": "Heavy moderation discretion plus broad data and content rights make this notably one-sided.",
+    "riskLevel": "Very one-sided",
+    "whatYouAgreeTo": [
+      "They can remove videos, throttle distribution, or suspend your account with broad discretion.",
+      "They can track a lot about how you use the app to tune recommendations and ads.",
+      "You give them a wide license to use and distribute what you upload.",
+      "Future policy changes can stick if you keep using the service.",
+      "Disputes may be pushed into arbitration instead of open court."
+    ],
+    "redFlags": [
+      {
+        "title": "Algorithmic visibility without clear appeal",
+        "clause": "We may remove or restrict access to content or accounts at our discretion and in line with our policies...",
+        "whyItMatters": "Enforcement can affect reach and access even when the exact reason is hard to challenge."
+      },
+      {
+        "title": "Broad media license",
+        "clause": "You grant us and our affiliates a worldwide, royalty-free license to use, reproduce, adapt, publish and transmit your User Content...",
+        "whyItMatters": "That is broader than simple hosting and gives the platform wide operational reuse rights."
+      },
+      {
+        "title": "Arbitration and class waiver",
+        "clause": "Any dispute will be resolved by binding arbitration and you waive any right to participate in a class action.",
+        "whyItMatters": "You may lose the leverage of court and group claims."
+      }
+    ]
+  }
+}

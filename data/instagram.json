@@ -1,0 +1,35 @@
+{
+  "brand": "Instagram",
+  "logo": "/logos/instagram.svg",
+  "sourceUrl": "https://help.instagram.com/581066165581870",
+  "date": "2026-06-20",
+  "text": "Instagram gives itself broad room to run the service, moderate content, and change product rules over time. By using the platform, you accept that your posts, profile information, messages tied to safety or operations, and activity signals can be processed to personalize feeds, ads, recommendations, and enforcement. The terms say Instagram may remove content or disable accounts when it believes rules were broken or risk exists. Users grant a license to host, use, distribute, modify, run, copy, publicly perform, translate, and create derivative works from content they share, subject to privacy settings and deletion timing. Meta also reserves the ability to update policies and treat continued use as acceptance of those changes. Disputes can be steered into arbitration depending on where the user lives, and liability is narrowed through warranty disclaimers and damages caps.",
+  "cachedSummary": {
+    "verdict": "Mostly standard, but broad data usage, weak recourse, and vague enforcement rights.",
+    "riskLevel": "Concerning",
+    "whatYouAgreeTo": [
+      "They can pull down content or disable your account with wide discretion.",
+      "You give them a broad operational license over what you upload.",
+      "Your activity can be used to shape ads, ranking, and product decisions.",
+      "Rules can change later, and continuing to use the app may count as acceptance.",
+      "If things go wrong, your path to challenge a decision can be limited."
+    ],
+    "redFlags": [
+      {
+        "title": "Broad account termination rights",
+        "clause": "We can remove any content or information you share on the Service if we believe that it violates these Terms...",
+        "whyItMatters": "Moderation and account loss can happen under broad standards, not just clear abuse."
+      },
+      {
+        "title": "Wide content license",
+        "clause": "You grant us a non-exclusive, transferable, sub-licensable, royalty-free, and worldwide license to host, use, distribute, modify...",
+        "whyItMatters": "They need room to run the product, but the license is still much broader than most users expect."
+      },
+      {
+        "title": "Policy changes by continued use",
+        "clause": "If you continue to use our Service after changes, you will be bound by the updated Terms.",
+        "whyItMatters": "Important rights can shift later without a fresh explicit agreement."
+      }
+    ]
+  }
+}

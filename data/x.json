@@ -1,0 +1,35 @@
+{
+  "brand": "X",
+  "logo": "/logos/x.svg",
+  "sourceUrl": "https://x.com/en/tos",
+  "date": "2026-06-20",
+  "text": "X positions the service as an open public conversation platform while keeping extensive discretion over content distribution, account status, and enforcement. Users are responsible for what they post, but X retains broad power to remove material, restrict visibility, or change features. The terms permit collection and use of usage data, device information, inferred interests, and interactions with ads and content. Uploaded content remains the user's property, but a sweeping license allows X to make it available, distribute it, adapt it, and analyze it in connection with the service. Liability disclaimers and dispute limitations reduce recovery options. The company can also revise the terms, and continued use may operate as consent.",
+  "cachedSummary": {
+    "verdict": "You keep ownership on paper, but enforcement discretion and reuse rights still tilt the deal heavily toward the platform.",
+    "riskLevel": "Concerning",
+    "whatYouAgreeTo": [
+      "They can limit reach, remove content, or suspend accounts with broad platform discretion.",
+      "They can use your activity data to rank content, personalize ads, and tune the product.",
+      "You grant a wide license over posts even though you technically keep ownership.",
+      "Rules can be changed later and applied through continued use.",
+      "Your ability to recover damages is narrowed by liability limits."
+    ],
+    "redFlags": [
+      {
+        "title": "Ownership without much control",
+        "clause": "By submitting, posting or displaying Content on or through the Services, you grant us a worldwide, non-exclusive, royalty-free license...",
+        "whyItMatters": "Keeping copyright does not stop the platform from taking broad operational and distribution rights."
+      },
+      {
+        "title": "Visibility and enforcement discretion",
+        "clause": "We may suspend or terminate your accounts or cease providing you with all or part of the Services at any time...",
+        "whyItMatters": "Reach and access can change quickly, often before you have much leverage."
+      },
+      {
+        "title": "Liability caps",
+        "clause": "The aggregate liability of the X entities shall not exceed the greater of one hundred U.S. dollars or the amount you paid us, if any...",
+        "whyItMatters": "Even if the service causes real harm, the practical upside of a claim may be very limited."
+      }
+    ]
+  }
+}
