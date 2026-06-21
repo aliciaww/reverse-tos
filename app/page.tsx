@@ -106,7 +106,14 @@ export default function Home() {
         body: JSON.stringify({ url: parsedUrl.toString() }),
       });
 
-      const payload = (await response.json()) as
+      const rawBody = await response.text();
+      const contentType = response.headers.get("content-type") ?? "";
+
+      if (!contentType.includes("application/json")) {
+        throw new Error("The analyzer returned an unexpected response. Try again.");
+      }
+
+      const payload = JSON.parse(rawBody) as
         | {
             sourceUrl?: string;
             fetchedAt?: string;

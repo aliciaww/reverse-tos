@@ -1,7 +1,7 @@
 import { Readability } from "@mozilla/readability";
 import { JSDOM } from "jsdom";
 
-const MAX_TEXT_LENGTH = 18000;
+const MAX_TEXT_LENGTH = 100000;
 const INSTAGRAM_TERMS_URL = "https://help.instagram.com/termsofuse";
 const INSTAGRAM_CMS_ID = "581066165581870";
 

@@ -120,7 +120,7 @@ function clipSentence(text: string, clauseHint: string) {
 }
 
 function buildFallbackSummary(text: string): TosSummary {
-  const normalized = text.slice(0, 12000);
+  const normalized = text.slice(0, 40000);
   const redFlags: RedFlag[] = [];
   const cardMap = new Map<string, AgreementCard>();
   let riskLevel: RiskLevel = "Low risk";
@@ -222,7 +222,7 @@ async function summarizeWithOpenAI(text: string, sourceUrl?: string) {
           content: [
             {
               type: "input_text",
-              text: `Source URL: ${sourceUrl ?? "Unknown"}\n\nTerms text:\n${text.slice(0, 14000)}`,
+              text: `Source URL: ${sourceUrl ?? "Unknown"}\n\nTerms text:\n${text.slice(0, 40000)}`,
             },
           ],
         },
