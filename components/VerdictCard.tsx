@@ -8,15 +8,15 @@ type VerdictCardProps = {
 
 export function VerdictCard({ verdict, riskLevel }: VerdictCardProps) {
   return (
-    <section className="rounded-[34px] border border-[var(--line)] bg-[var(--card)] p-6 shadow-[var(--shadow-soft)] sm:p-7">
+    <section>
       <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--muted-strong)]">
         Verdict
       </p>
-      <p className="mt-4 max-w-xl font-serif text-3xl leading-tight sm:text-[2.5rem]">
-        {verdict}
-      </p>
-      <div className="mt-6">
+      <div className="mt-4 border border-[var(--line)] border-l-4 border-l-[var(--accent)] bg-[var(--accent-soft)] px-4 py-4">
         <RiskTag riskLevel={riskLevel} />
+        <p className="mt-3 max-w-xl text-[15px] font-medium leading-7 text-[var(--ink)]">
+          {verdict}
+        </p>
       </div>
     </section>
   );

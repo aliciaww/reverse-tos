@@ -5,30 +5,41 @@
   "date": "2026-06-20",
   "text": "Instagram gives itself broad room to run the service, moderate content, and change product rules over time. By using the platform, you accept that your posts, profile information, messages tied to safety or operations, and activity signals can be processed to personalize feeds, ads, recommendations, and enforcement. The terms say Instagram may remove content or disable accounts when it believes rules were broken or risk exists. Users grant a license to host, use, distribute, modify, run, copy, publicly perform, translate, and create derivative works from content they share, subject to privacy settings and deletion timing. Meta also reserves the ability to update policies and treat continued use as acceptance of those changes. Disputes can be steered into arbitration depending on where the user lives, and liability is narrowed through warranty disclaimers and damages caps.",
   "cachedSummary": {
-    "verdict": "Mostly standard, but broad data usage, weak recourse, and vague enforcement rights.",
+    "verdict": "Instagram keeps broad control over your content, data use, and account status.",
     "riskLevel": "Concerning",
-    "whatYouAgreeTo": [
-      "They can pull down content or disable your account with wide discretion.",
-      "You give them a broad operational license over what you upload.",
-      "Your activity can be used to shape ads, ranking, and product decisions.",
-      "Rules can change later, and continuing to use the app may count as acceptance.",
-      "If things go wrong, your path to challenge a decision can be limited."
+    "agreementCards": [
+      {
+        "label": "Content license",
+        "detail": "They can host, format, and distribute what you post across the service."
+      },
+      {
+        "label": "Enforcement control",
+        "detail": "They can remove content or disable accounts under broad platform rules."
+      },
+      {
+        "label": "Data use",
+        "detail": "Your activity may be used for ads, ranking, and recommendation tuning."
+      },
+      {
+        "label": "Rule changes",
+        "detail": "Updated terms may apply simply because you keep using Instagram."
+      }
     ],
     "redFlags": [
       {
         "title": "Broad account termination rights",
         "clause": "We can remove any content or information you share on the Service if we believe that it violates these Terms...",
-        "whyItMatters": "Moderation and account loss can happen under broad standards, not just clear abuse."
+        "whyItMatters": "If your account matters to you, this is the clause that says the platform keeps the final say."
       },
       {
         "title": "Wide content license",
         "clause": "You grant us a non-exclusive, transferable, sub-licensable, royalty-free, and worldwide license to host, use, distribute, modify...",
-        "whyItMatters": "They need room to run the product, but the license is still much broader than most users expect."
+        "whyItMatters": "You still own your content, but Instagram gets a lot of freedom in how it uses it inside the service."
       },
       {
         "title": "Policy changes by continued use",
         "clause": "If you continue to use our Service after changes, you will be bound by the updated Terms.",
-        "whyItMatters": "Important rights can shift later without a fresh explicit agreement."
+        "whyItMatters": "You do not get much leverage here; the practical choice is accept the changes or stop using the service."
       }
     ]
   }

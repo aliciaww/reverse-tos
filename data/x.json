@@ -5,30 +5,41 @@
   "date": "2026-06-20",
   "text": "X positions the service as an open public conversation platform while keeping extensive discretion over content distribution, account status, and enforcement. Users are responsible for what they post, but X retains broad power to remove material, restrict visibility, or change features. The terms permit collection and use of usage data, device information, inferred interests, and interactions with ads and content. Uploaded content remains the user's property, but a sweeping license allows X to make it available, distribute it, adapt it, and analyze it in connection with the service. Liability disclaimers and dispute limitations reduce recovery options. The company can also revise the terms, and continued use may operate as consent.",
   "cachedSummary": {
-    "verdict": "You keep ownership on paper, but enforcement discretion and reuse rights still tilt the deal heavily toward the platform.",
+    "verdict": "X keeps broad rights over your content, reach, and account status.",
     "riskLevel": "Concerning",
-    "whatYouAgreeTo": [
-      "They can limit reach, remove content, or suspend accounts with broad platform discretion.",
-      "They can use your activity data to rank content, personalize ads, and tune the product.",
-      "You grant a wide license over posts even though you technically keep ownership.",
-      "Rules can be changed later and applied through continued use.",
-      "Your ability to recover damages is narrowed by liability limits."
+    "agreementCards": [
+      {
+        "label": "Content license",
+        "detail": "They can reuse and distribute what you post across the service."
+      },
+      {
+        "label": "Enforcement control",
+        "detail": "They can restrict visibility or suspend accounts under broad rules."
+      },
+      {
+        "label": "Data use",
+        "detail": "Your activity may be used for ads, ranking, and tuning."
+      },
+      {
+        "label": "Limited recourse",
+        "detail": "Liability limits reduce what you may be able to recover."
+      }
     ],
     "redFlags": [
       {
         "title": "Ownership without much control",
         "clause": "By submitting, posting or displaying Content on or through the Services, you grant us a worldwide, non-exclusive, royalty-free license...",
-        "whyItMatters": "Keeping copyright does not stop the platform from taking broad operational and distribution rights."
+        "whyItMatters": "If you care about how your posts travel and appear, the ownership line by itself is not much protection."
       },
       {
         "title": "Visibility and enforcement discretion",
         "clause": "We may suspend or terminate your accounts or cease providing you with all or part of the Services at any time...",
-        "whyItMatters": "Reach and access can change quickly, often before you have much leverage."
+        "whyItMatters": "This is the clause that lets the platform control both access and visibility with limited user recourse."
       },
       {
         "title": "Liability caps",
         "clause": "The aggregate liability of the X entities shall not exceed the greater of one hundred U.S. dollars or the amount you paid us, if any...",
-        "whyItMatters": "Even if the service causes real harm, the practical upside of a claim may be very limited."
+        "whyItMatters": "Even if a claim is valid, this clause is designed to make the payout small."
       }
     ]
   }

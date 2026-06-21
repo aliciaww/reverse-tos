@@ -1,18 +1,26 @@
 import type { RiskLevel } from "@/types";
 
 const riskStyles: Record<RiskLevel, string> = {
-  "Low risk": "bg-[var(--risk-low-bg)] text-[var(--risk-low-text)]",
-  Annoying: "bg-[var(--risk-annoying-bg)] text-[var(--risk-annoying-text)]",
-  Concerning: "bg-[var(--risk-concerning-bg)] text-[var(--risk-concerning-text)]",
-  "Very one-sided": "bg-[var(--risk-very-bg)] text-[var(--risk-very-text)]",
+  "Low risk": "text-[var(--risk-low-text)]",
+  Annoying: "text-[var(--risk-annoying-text)]",
+  Concerning: "text-[var(--risk-concerning-text)]",
+  "Very one-sided": "text-[var(--risk-very-text)]",
 };
 
 export function RiskTag({ riskLevel }: { riskLevel: RiskLevel }) {
+  const labels: Record<RiskLevel, string> = {
+    "Low risk": "Low risk",
+    Annoying: "Medium risk",
+    Concerning: "High risk",
+    "Very one-sided": "High risk",
+  };
+
   return (
     <span
-      className={`inline-flex rounded-full px-4 py-2 text-sm font-semibold ${riskStyles[riskLevel]}`}
+      className={`inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] ${riskStyles[riskLevel]}`}
     >
-      {riskLevel}
+      <span className="text-[12px]">●</span>
+      {labels[riskLevel]}
     </span>
   );
 }

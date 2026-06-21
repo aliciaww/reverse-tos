@@ -5,24 +5,36 @@
   "date": "2026-06-20",
   "text": "Discord's terms emphasize community safety, service flexibility, and broad rights to enforce platform standards. The company can investigate misuse, remove servers or messages, and suspend users it believes put the service or other users at risk. Discord processes account details, content, and behavioral signals to operate communications, moderation, trust-and-safety systems, and product improvements. Content users upload is typically covered by a license that allows hosting, storing, reproducing, and making it available as needed to run the service. Arbitration, venue controls, and liability limits reduce user remedies. Terms can also be revised over time, with ongoing use treated as acceptance.",
   "cachedSummary": {
-    "verdict": "Fairly standard for a large communications platform, but moderation power and dispute limits still matter.",
+    "verdict": "Discord keeps strong moderation power and limits how much leverage users have in disputes.",
     "riskLevel": "Annoying",
-    "whatYouAgreeTo": [
-      "They can investigate, moderate, and suspend with a lot of room to act fast.",
-      "Content you upload can be stored and processed to run trust and safety systems.",
-      "If the rules change, continued use may bind you to the updated version.",
-      "If you have a dispute, your options may be narrowed by arbitration and liability caps."
+    "agreementCards": [
+      {
+        "label": "Moderation power",
+        "detail": "They can suspend accounts or servers quickly when they see risk."
+      },
+      {
+        "label": "Service operations",
+        "detail": "Messages and uploads may be processed for safety and platform functions."
+      },
+      {
+        "label": "Rule changes",
+        "detail": "If the terms change later, continued use may still bind you."
+      },
+      {
+        "label": "Limited recourse",
+        "detail": "Liability limits and dispute controls reduce your practical remedies."
+      }
     ],
     "redFlags": [
       {
         "title": "Broad server and account enforcement",
         "clause": "We may suspend or terminate your access to some or all of the services at any time for any or no reason permitted by applicable law...",
-        "whyItMatters": "You may not get much warning or a meaningful appeal path."
+        "whyItMatters": "If you depend on Discord for a group or business, this is the clause that leaves you with limited control."
       },
       {
         "title": "Terms can shift later",
         "clause": "If you continue using the services after the changes become effective, then you agree to the revised terms.",
-        "whyItMatters": "Future updates can materially change the deal after you have already built your community there."
+        "whyItMatters": "The longer you invest in the platform, the less realistic it is to walk away when the terms move against you."
       }
     ]
   }

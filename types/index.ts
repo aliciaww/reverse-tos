@@ -10,10 +10,15 @@ export type RedFlag = {
   whyItMatters: string;
 };
 
+export type AgreementCard = {
+  label: string;
+  detail: string;
+};
+
 export type TosSummary = {
   verdict: string;
   riskLevel: RiskLevel;
-  whatYouAgreeTo: string[];
+  agreementCards: AgreementCard[];
   redFlags: RedFlag[];
 };
 

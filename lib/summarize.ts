@@ -1,4 +1,4 @@
-import type { RedFlag, RiskLevel, TosSummary } from "@/types";
+import type { AgreementCard, RedFlag, RiskLevel, TosSummary } from "@/types";
 
 const riskOrder: RiskLevel[] = [
   "Low risk",
@@ -12,7 +12,7 @@ type ClausePattern = {
   match: RegExp;
   clauseHint: string;
   whyItMatters: string;
-  bullet: string;
+  card: AgreementCard;
   severity: RiskLevel;
 };
 
@@ -22,7 +22,10 @@ const clausePatterns: ClausePattern[] = [
     match: /\barbitration\b/i,
     clauseHint: "Disputes may be resolved through binding arbitration instead of court.",
     whyItMatters: "This can block you from suing in court and usually reduces leverage.",
-    bullet: "Disputes may be forced into arbitration instead of open court.",
+    card: {
+      label: "Limited recourse",
+      detail: "Disputes may be forced into arbitration instead of open court.",
+    },
     severity: "Concerning",
   },
   {
@@ -30,7 +33,10 @@ const clausePatterns: ClausePattern[] = [
     match: /class action|collective action/i,
     clauseHint: "You may waive the right to participate in a class or collective action.",
     whyItMatters: "That makes it harder to challenge widespread harm together.",
-    bullet: "You may be giving up the ability to join a class action.",
+    card: {
+      label: "Group claims",
+      detail: "You may give up the ability to join a class or collective action.",
+    },
     severity: "Concerning",
   },
   {
@@ -38,7 +44,10 @@ const clausePatterns: ClausePattern[] = [
     match: /royalty-free|worldwide license|sub-licensable|transferable license/i,
     clauseHint: "You grant the service a broad license to use, distribute, adapt, or display your content.",
     whyItMatters: "The platform gets wider reuse rights than most users assume.",
-    bullet: "You grant them a wide license over content you upload.",
+    card: {
+      label: "Content license",
+      detail: "They can use, distribute, or adapt what you upload.",
+    },
     severity: "Concerning",
   },
   {
@@ -46,7 +55,10 @@ const clausePatterns: ClausePattern[] = [
     match: /change these terms|updated terms|continued use|revise these terms/i,
     clauseHint: "The company can change the rules later, and continuing to use the service can count as acceptance.",
     whyItMatters: "The agreement can shift after you sign up, without a fresh explicit yes.",
-    bullet: "Policies can change later and continued use may count as acceptance.",
+    card: {
+      label: "Rule changes",
+      detail: "Updated terms may apply if you keep using the service.",
+    },
     severity: "Annoying",
   },
   {
@@ -54,7 +66,10 @@ const clausePatterns: ClausePattern[] = [
     match: /terminate your account|suspend your access|remove content|disable your account/i,
     clauseHint: "The service can remove content or suspend accounts with broad discretion.",
     whyItMatters: "You may have limited warning, explanation, or appeal options.",
-    bullet: "They can remove your account or content with broad discretion.",
+    card: {
+      label: "Enforcement control",
+      detail: "They can remove content or suspend accounts with broad discretion.",
+    },
     severity: "Concerning",
   },
   {
@@ -62,7 +77,10 @@ const clausePatterns: ClausePattern[] = [
     match: /automatically renew|recurring subscription|auto-renew/i,
     clauseHint: "Subscriptions may renew automatically unless you cancel in time.",
     whyItMatters: "Charges can continue unless you actively opt out.",
-    bullet: "Paid plans may auto-renew unless you cancel on time.",
+    card: {
+      label: "Auto-renew",
+      detail: "Paid plans may keep charging unless you cancel in time.",
+    },
     severity: "Annoying",
   },
   {
@@ -70,7 +88,10 @@ const clausePatterns: ClausePattern[] = [
     match: /liability.*limited|aggregate liability|maximum extent permitted by law/i,
     clauseHint: "The company limits how much money you can recover if something goes wrong.",
     whyItMatters: "Even if you are harmed, the practical value of a claim may be small.",
-    bullet: "If they cause harm, the terms may sharply limit what you can recover.",
+    card: {
+      label: "Limited recourse",
+      detail: "The terms may sharply limit what you can recover.",
+    },
     severity: "Annoying",
   },
   {
@@ -78,7 +99,10 @@ const clausePatterns: ClausePattern[] = [
     match: /device information|usage data|personalized ads|analytics|location data/i,
     clauseHint: "The service can collect device, behavior, and other usage signals to run ads or product decisions.",
     whyItMatters: "A lot of the business value comes from observing how you behave, not just hosting your account.",
-    bullet: "Your activity and device data may be used for ads, ranking, or product decisions.",
+    card: {
+      label: "Data use",
+      detail: "Your activity may be used for ads, ranking, or product decisions.",
+    },
     severity: "Annoying",
   },
 ];
@@ -98,7 +122,7 @@ function clipSentence(text: string, clauseHint: string) {
 function buildFallbackSummary(text: string): TosSummary {
   const normalized = text.slice(0, 12000);
   const redFlags: RedFlag[] = [];
-  const bulletSet = new Set<string>();
+  const cardMap = new Map<string, AgreementCard>();
   let riskLevel: RiskLevel = "Low risk";
 
   for (const pattern of clausePatterns) {
@@ -111,7 +135,7 @@ function buildFallbackSummary(text: string): TosSummary {
       clause: clipSentence(normalized, pattern.clauseHint),
       whyItMatters: pattern.whyItMatters,
     });
-    bulletSet.add(pattern.bullet);
+    cardMap.set(pattern.card.label, pattern.card);
     riskLevel = bumpRisk(riskLevel, pattern.severity);
   }
 
@@ -121,32 +145,50 @@ function buildFallbackSummary(text: string): TosSummary {
       clause: "The terms mainly describe how the service operates, what users are responsible for, and how disputes or liability are limited.",
       whyItMatters: "Nothing major stands out from the text sample, but it still favors the platform over the user in routine ways.",
     });
-    bulletSet.add("Most of this looks like standard service boilerplate rather than an unusual trap.");
+    cardMap.set("Standard terms", {
+      label: "Standard terms",
+      detail: "Most of this looks like ordinary platform boilerplate, not an unusual trap.",
+    });
   }
 
-  while (bulletSet.size < 4) {
-    bulletSet.add([
-      "The company writes the rules and keeps room to interpret them broadly.",
-      "If the service changes later, continuing to use it may still bind you.",
-      "The terms are mainly designed to reduce the company’s legal and operational risk.",
-      "Your leverage mostly comes from leaving the service, not negotiating the terms.",
-    ][bulletSet.size]);
-  }
+  const fallbackCards: AgreementCard[] = [
+    {
+      label: "Platform control",
+      detail: "The company writes the rules and keeps room to interpret them broadly.",
+    },
+    {
+      label: "Rule changes",
+      detail: "Continuing to use the service may still bind you to future changes.",
+    },
+    {
+      label: "Company protection",
+      detail: "The terms are designed to reduce the company’s legal and operational risk.",
+    },
+    {
+      label: "Limited leverage",
+      detail: "Your main practical option is often to leave, not negotiate.",
+    },
+  ];
 
-  const bullets = Array.from(bulletSet).slice(0, 5);
+  for (const card of fallbackCards) {
+    if (cardMap.size >= 4) {
+      break;
+    }
+    cardMap.set(card.label, card);
+  }
 
   const verdictByRisk: Record<RiskLevel, string> = {
-    "Low risk": "Mostly standard boilerplate, with the usual platform-friendly carveouts.",
-    Annoying: "Mostly standard, but there are a few user-unfriendly clauses worth noticing.",
-    Concerning: "Several clauses materially favor the company over the user, especially on leverage and recourse.",
-    "Very one-sided": "The terms stack power heavily toward the company on enforcement, reuse rights, and dispute control.",
+    "Low risk": "Mostly standard terms with a few platform-friendly carveouts.",
+    Annoying: "The company keeps meaningful control even where the terms look standard.",
+    Concerning: "The company keeps broad control over content, enforcement, and recourse.",
+    "Very one-sided": "The company keeps strong rights over content, enforcement, and disputes.",
   };
 
   return {
     verdict: verdictByRisk[riskLevel],
     riskLevel,
-    whatYouAgreeTo: bullets,
-    redFlags: redFlags.slice(0, 5),
+    agreementCards: Array.from(cardMap.values()).slice(0, 4),
+    redFlags: redFlags.slice(0, 3),
   };
 }
 
@@ -171,7 +213,7 @@ async function summarizeWithOpenAI(text: string, sourceUrl?: string) {
           content: [
             {
               type: "input_text",
-              text: "You summarize consumer terms of service in plain English. Return strict JSON with keys verdict, riskLevel, whatYouAgreeTo, redFlags. Risk level must be one of: Low risk, Annoying, Concerning, Very one-sided. whatYouAgreeTo must contain 4 to 6 strings. redFlags must contain 2 to 5 objects with title, clause, whyItMatters. Keep the tone concise, specific, and slightly skeptical without sounding alarmist.",
+              text: "You summarize consumer terms of service in plain English. Return strict JSON with keys verdict, riskLevel, agreementCards, redFlags. Risk level must be one of: Low risk, Annoying, Concerning, Very one-sided. Verdict must be one sentence and no more than 18 words. agreementCards must contain exactly 4 objects with label and detail, both short. redFlags must contain 2 to 3 objects with title, clause, whyItMatters. Keep the tone concise, specific, and slightly skeptical without sounding alarmist.",
             },
           ],
         },
@@ -192,23 +234,31 @@ async function summarizeWithOpenAI(text: string, sourceUrl?: string) {
           schema: {
             type: "object",
             additionalProperties: false,
-            required: ["verdict", "riskLevel", "whatYouAgreeTo", "redFlags"],
+            required: ["verdict", "riskLevel", "agreementCards", "redFlags"],
             properties: {
               verdict: { type: "string" },
               riskLevel: {
                 type: "string",
                 enum: riskOrder,
               },
-              whatYouAgreeTo: {
+              agreementCards: {
                 type: "array",
                 minItems: 4,
-                maxItems: 6,
-                items: { type: "string" },
+                maxItems: 4,
+                items: {
+                  type: "object",
+                  additionalProperties: false,
+                  required: ["label", "detail"],
+                  properties: {
+                    label: { type: "string" },
+                    detail: { type: "string" }
+                  }
+                },
               },
               redFlags: {
                 type: "array",
                 minItems: 2,
-                maxItems: 5,
+                maxItems: 3,
                 items: {
                   type: "object",
                   additionalProperties: false,
